@@ -21,3 +21,14 @@ def talk_with_AI():
             st.markdown(message["content"])
 
     user_input = st.chat_input("Ask anything about the uploaded PDF")
+
+    if user_input:
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        with st.chat_message("assistant"):
+            response = ai.get_response(user_input, st.session_state.messages)
+            st.markdown(response)
+            st.session_state.messages.append({"role": "assistant", "content": response})
+
+
+if __name__ == "__main__":
+    talk_with_AI()
