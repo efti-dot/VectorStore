@@ -9,7 +9,7 @@ class OpenAIConfig:
         self.model = model
         self.client = OpenAI(api_key=self.api_key)
         self.conversation_history = [
-            {"role": "system", "content": "You are a helpful information assistant. Provide concise and accurate information."}
+            {"role": "system", "content": "You are a helpful property information assistant. Provide concise and accurate information about user property."}
         ]
 
     def get_response(self, prompt: str, history: list) -> str:

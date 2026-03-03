@@ -20,7 +20,7 @@ def talk_with_AI():
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    user_input = st.chat_input("Ask anything about the uploaded PDF")
+    user_input = st.chat_input("Ask anything about your property...")
 
     if user_input:
         with st.chat_message("user"):

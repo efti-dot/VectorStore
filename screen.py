@@ -9,8 +9,3 @@ def uploading_screen():
         "Upload your document (PDF, DOCX, or image)", 
         type=["pdf", "docx"]
     )
-
-    if uploaded_file is not None:
-        st.write("File uploaded")
-    else:
-        st.write("No file uploaded yet.")
