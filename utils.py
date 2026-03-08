@@ -4,6 +4,7 @@ import io
 from docx import Document
 from openai import OpenAI
 from dotenv import load_dotenv
+from sentence_transformers import SentenceTransformer
 import tiktoken
 from typing import List
 import base64
@@ -67,3 +68,12 @@ def split_text(text: str, max_tokens=500) -> List[str]:
     if chunk:
         chunks.append(" ".join(chunk))
     return chunks
+
+
+def create_embeddings(chunks: List[str], model_name: str = "all-MiniLM-L6-v2") -> List[dict]:
+    model = SentenceTransformer(model_name)
+    embeddings = []
+    vectors = model.encode(chunks, show_progress_bar=True)
+    for chunk, vector in zip(chunks, vectors):
+        embeddings.append({"text": chunk, "embedding": vector.tolist()})
+    return embeddings
