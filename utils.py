@@ -4,6 +4,8 @@ import io
 from docx import Document
 from openai import OpenAI
 from dotenv import load_dotenv
+import tiktoken
+from typing import List
 import base64
 load_dotenv()
 
@@ -47,3 +49,21 @@ def extract_text_from_image(file_bytes: bytes) -> str:
         )
 
         return response.choices[0].message.content.strip()
+
+
+def split_text(text: str, max_tokens=500) -> List[str]:
+    enc = tiktoken.get_encoding("cl100k_base")
+    words = text.split()
+    chunks, chunk = [], []
+    tokens = 0
+    for word in words:
+        word_tokens = len(enc.encode(word))
+        if tokens + word_tokens > max_tokens:
+            chunks.append(" ".join(chunk))
+            chunk = []
+            tokens = 0
+        chunk.append(word)
+        tokens += word_tokens
+    if chunk:
+        chunks.append(" ".join(chunk))
+    return chunks
