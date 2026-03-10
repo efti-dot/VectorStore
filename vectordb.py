@@ -25,4 +25,7 @@ class VectorStore:
         with open(self.meta_path, "wb") as f:
             pickle.dump(self.metadata, f)
 
-    
+    def load(self):
+        self.index = faiss.read_index(self.index_path)
+        with open(self.meta_path, "rb") as f:
+            self.metadata = pickle.load(f)
