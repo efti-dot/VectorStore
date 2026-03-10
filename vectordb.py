@@ -1,6 +1,7 @@
 import faiss
 import numpy as np
 import os
+import pickle
 
 class VectorStore:
     def __init__(self, dim: int, index_path="vector.index", meta_path="metadata.pkl"):
@@ -18,5 +19,10 @@ class VectorStore:
         self.index.add(np_vectors)
         self.metadata.extend(texts)
         self.save()
+
+    def save(self):
+        faiss.write_index(self.index, self.index_path)
+        with open(self.meta_path, "wb") as f:
+            pickle.dump(self.metadata, f)
 
     
