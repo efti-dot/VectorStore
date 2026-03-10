@@ -13,4 +13,10 @@ class VectorStore:
         if os.path.exists(index_path) and os.path.exists(meta_path):
             self.load()
 
+    def add(self, vectors: list, texts: list):
+        np_vectors = np.array(vectors).astype("float32")
+        self.index.add(np_vectors)
+        self.metadata.extend(texts)
+        self.save()
+
     
